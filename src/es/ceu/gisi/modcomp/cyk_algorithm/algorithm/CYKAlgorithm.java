@@ -94,6 +94,7 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
         //para así luego poder meterlo en la matriz
         //tm comprobar que si produccion es mayor que 2, no es valido
         int a = 0;
+        int b = 0;
         
         if(((production.length() == 1) && (Character.isUpperCase(production.charAt(0)) == false))|| ((production.length()== 2)&& (Character.isUpperCase(production.charAt(0))) && (Character.isUpperCase(production.charAt(1))))){
             
@@ -112,7 +113,17 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
             }else{
                 for(int i = 0; i < matriz.size() ; i++){
                     if((String.valueOf(nonterminal)).equals(matriz.get(i).get(0))){
-                        matriz.get(i).add(production);
+                        
+                        for(int j = 0 ; j< matriz.get(i).size() ; j++){
+                            if(matriz.get(i).get(j).equals(production)){
+                                b++;
+                            }
+                            if(b ==0){
+                                matriz.get(i).add(production);
+                            }else{
+                                throw new UnsupportedOperationException("Not supported yet.");
+                            }
+                        }                                                
                     }
                 }
             }
