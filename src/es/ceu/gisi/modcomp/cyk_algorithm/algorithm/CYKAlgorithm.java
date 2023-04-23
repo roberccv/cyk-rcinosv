@@ -61,8 +61,8 @@ ArrayList<Character> Terminales = new ArrayList<>();
     public void setStartSymbol(char nonterminal) throws CYKAlgorithmException {
         //si el el nonterminal no esta en el array de no terminales, cambiar condición if
         //solo quiero que me funcione :)
-        boolean dentro;
-        for(int i; i < noTerminales.size() ; i++){
+        boolean dentro = false;
+        for(int i = 0; i < noTerminales.size() ; i++){
             if(noTerminales.get(i) == nonterminal){
                 dentro = true;
             }
@@ -88,7 +88,17 @@ ArrayList<Character> Terminales = new ArrayList<>();
     public void addProduction(char nonterminal, String production) throws CYKAlgorithmException {
         //IMPORTANTE tengo que separar el String en chars para comprobar que este en No terminales
         //para así luego poder meterlo en la matriz
-        throw new UnsupportedOperationException("Not supported yet.");
+        //tm comprobar que si produccion es mayor que 2, no es valido
+        boolean Mayuscula;
+        if((production.length() == 1) && (Character.isUpperCase(production.charAt(0)) == false)){
+            //
+        }else if ((production.length()== 2)&& (Character.isUpperCase(production.charAt(0))) && (Character.isUpperCase(production.charAt(1)))){
+            //
+        }else{
+            throw new UnsupportedOperationException("Not supported yet.");    
+            }
+  
+        
     }
 
     @Override
