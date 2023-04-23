@@ -17,6 +17,10 @@ char axioma;
 ArrayList<Character> noTerminales = new ArrayList<>();
 ArrayList<Character> Terminales = new ArrayList<>();
 
+//probar sin lo de dentro de los corchetes de el lado derecho del igual
+ArrayList<ArrayList<String>> matriz = new ArrayList<ArrayList<String>>();
+ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
+
     @Override
     /**
      * Método que añade los elementos no terminales de la gramática.
@@ -89,21 +93,33 @@ ArrayList<Character> Terminales = new ArrayList<>();
         //IMPORTANTE tengo que separar el String en chars para comprobar que este en No terminales
         //para así luego poder meterlo en la matriz
         //tm comprobar que si produccion es mayor que 2, no es valido
+        int a = 0;
         
-        ArrayList<ArrayList<String>> matriz = new ArrayList<ArrayList<String>>();
-        //probar sin lo de dentro de los corchetes de el lado derecho del igual
-        ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
+        if(((production.length() == 1) && (Character.isUpperCase(production.charAt(0)) == false))|| ((production.length()== 2)&& (Character.isUpperCase(production.charAt(0))) && (Character.isUpperCase(production.charAt(1))))){
+            
+            for(int i = 0 ;  i< noTerminalesAnnadidos.size() ; i++){
+                if(nonterminal == noTerminalesAnnadidos.get(i)){
+                    a = a+1;
+                }
+            }
         
-        
-        if((production.length() == 1) && (Character.isUpperCase(production.charAt(0)) == false)){
-            //
-        }else if ((production.length()== 2)&& (Character.isUpperCase(production.charAt(0))) && (Character.isUpperCase(production.charAt(1)))){
-            //
+            if(a == 0){
+                int posicionNuevo = matriz.size();
+                matriz.add(new ArrayList<String>());
+                matriz.get(posicionNuevo).add(String.valueOf(nonterminal));
+                matriz.get(posicionNuevo).add(production);
+                noTerminalesAnnadidos.add(nonterminal);
+            }else{
+                for(int i = 0; i < matriz.size() ; i++){
+                    if((String.valueOf(nonterminal)).equals(matriz.get(i).get(0))){
+                        matriz.get(i).add(production);
+                    }
+                }
+            }
         }else{
             throw new UnsupportedOperationException("Not supported yet.");    
-            }
+        }
   
-        
     }
 
     @Override
