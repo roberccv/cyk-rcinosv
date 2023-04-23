@@ -95,8 +95,9 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
         //tm comprobar que si produccion es mayor que 2, no es valido
         int a = 0;
         int b = 0;
-        
-        if(((production.length() == 1) && (Character.isUpperCase(production.charAt(0)) == false))|| ((production.length()== 2)&& (Character.isUpperCase(production.charAt(0))) && (Character.isUpperCase(production.charAt(1))))){
+        boolean condición1 = ((production.length() == 1) && (Character.isUpperCase(production.charAt(0)) == false));
+        boolean condición2 = ((production.length()== 2) && (Character.isUpperCase(production.charAt(0))) && (Character.isUpperCase(production.charAt(1))));
+        if(condición1|| condición2){
             
             for(int i = 0 ;  i< noTerminalesAnnadidos.size() ; i++){
                 if(nonterminal == noTerminalesAnnadidos.get(i)){
