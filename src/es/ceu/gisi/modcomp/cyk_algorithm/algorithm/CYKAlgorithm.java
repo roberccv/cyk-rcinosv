@@ -27,10 +27,10 @@ ArrayList<Character> Terminales = new ArrayList<>();
     public void addNonTerminal(char nonterminal) throws CYKAlgorithmException {
         //preguntar si  puedo comprobar que si ya esta en el arrayList no lo añada
         //y lance otra excepción -> ese elemento ya ha sido añadido previamente
-        if(Character.isUpperCase(nonterminal) == false){
-            throw new UnsupportedOperationException("Not supported yet.");
-        }else{
+        if(Character.isUpperCase(nonterminal)){
             noTerminales.add(nonterminal);
+        }else{
+            throw new UnsupportedOperationException("Not supported yet.");
         }
     }
     
@@ -89,7 +89,12 @@ ArrayList<Character> Terminales = new ArrayList<>();
         //IMPORTANTE tengo que separar el String en chars para comprobar que este en No terminales
         //para así luego poder meterlo en la matriz
         //tm comprobar que si produccion es mayor que 2, no es valido
-        boolean Mayuscula;
+        
+        ArrayList<ArrayList<String>> matriz = new ArrayList<ArrayList<String>>();
+        //probar sin lo de dentro de los corchetes de el lado derecho del igual
+        ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
+        
+        
         if((production.length() == 1) && (Character.isUpperCase(production.charAt(0)) == false)){
             //
         }else if ((production.length()== 2)&& (Character.isUpperCase(production.charAt(0))) && (Character.isUpperCase(production.charAt(1)))){
