@@ -15,7 +15,7 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
 char axioma;
 
 ArrayList<Character> noTerminales = new ArrayList<>();
-ArrayList<Character> Terminales = new ArrayList<>();
+ArrayList<Character> terminales = new ArrayList<>();
 
 //probar sin lo de dentro de los corchetes de el lado derecho del igual
 ArrayList<ArrayList<String>> matriz = new ArrayList<ArrayList<String>>();
@@ -31,25 +31,38 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
     public void addNonTerminal(char nonterminal) throws CYKAlgorithmException {
         //preguntar si  puedo comprobar que si ya esta en el arrayList no lo añada
         //y lance otra excepción -> ese elemento ya ha sido añadido previamente
-        if(Character.isUpperCase(nonterminal)){
+        boolean condicion = Character.isDigit(nonterminal);
+        if(Character.isUpperCase(nonterminal) && (isNonTAdded(nonterminal)== false) && (condicion == false)){
             noTerminales.add(nonterminal);
         }else{
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new CYKAlgorithmException("Not supported yet.");
         }
     }
+    /*public boolean noNumero(char c){
+        int comprobador = 0;
+        for (int i = 0; i < 10; i++) {
+            if (c == i) {
+                comprobador++;
+            }
+        }
+        return comprobador == 0;
+    }
+    */
     
     @Override
     /**
      * Método que añade los elementos terminales de la gramática.
      *
-     * @param terminal Por ejemplo, 'a'
+     * @param terminal Por ejemplo, 'a' 
      * @throws CYKAlgorithmException Si el elemento no es una letra minúscula.
      */
     public void addTerminal(char terminal) throws CYKAlgorithmException {
-        if(Character.isUpperCase(terminal)){
-            throw new UnsupportedOperationException("Not supported yet.");
+        
+        boolean condicion = Character.isDigit(terminal);
+        if((Character.isUpperCase(terminal)== false) && (condicion == false) && (isTAdded(String.valueOf(terminal)) == false) ){
+            terminales.add(terminal);
         }else{
-            Terminales.add(terminal);
+            throw new CYKAlgorithmException("Not supported yet.");
         }
     }
 
@@ -72,7 +85,7 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
             }
         }
         if(dentro == false){
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new CYKAlgorithmException("Not supported yet.");
         }else{
             axioma = nonterminal;
        }
@@ -95,9 +108,12 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
         //tm comprobar que si produccion es mayor que 2, no es valido
         int a = 0;
         int b = 0;
-        boolean condición1 = ((production.length() == 1) && (Character.isUpperCase(production.charAt(0)) == false));
-        boolean condición2 = ((production.length()== 2) && (Character.isUpperCase(production.charAt(0))) && (Character.isUpperCase(production.charAt(1))));
-        if(condición1|| condición2){
+        boolean condicion1 = ((production.length() == 1) && (Character.isUpperCase(production.charAt(0)) == false) && isTAdded(production));
+        boolean condicion2 = ((production.length()== 2) && (Character.isUpperCase(production.charAt(0))) && (Character.isUpperCase(production.charAt(1))) && isProdAdded(production));
+        boolean condicion3 = (isNonTAdded(nonterminal));
+        
+        
+        if((condicion1 || condicion2) && (condicion3)){
             
             for(int i = 0 ;  i< noTerminalesAnnadidos.size() ; i++){
                 if(nonterminal == noTerminalesAnnadidos.get(i)){
@@ -122,15 +138,46 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
                             if(b ==0){
                                 matriz.get(i).add(production);
                             }else{
-                                throw new UnsupportedOperationException("Not supported yet.");
+                                throw new CYKAlgorithmException("La producción ya había sido añadida");
                             }
                         }                                                
                     }
                 }
             }
         }else{
-            throw new UnsupportedOperationException("Not supported yet.");    
+            throw new CYKAlgorithmException("La producción no cumple los requisitos");    
         }  
+    }
+    
+    public boolean isProdAdded(String noTerminal3){
+        int comprobador = 0;
+        
+        for(int i = 0; i<noTerminales.size() ; i++){
+            if((String.valueOf(noTerminales.get(i)).equals(noTerminal3.charAt(0)))||(String.valueOf(noTerminales.get(i)).equals(noTerminal3.charAt(1)))){
+                comprobador++;
+            }   
+        }        
+        return comprobador == 2;
+    }
+    public boolean isNonTAdded(char terminal3){
+        int comprobador = 0;
+        
+        for(int i = 0; i<noTerminales.size() ; i++){
+            if(noTerminales.get(i) == terminal3){
+                comprobador++;
+            }
+        }
+        return comprobador == 1;
+    }
+    public boolean isTAdded(String terminal3){
+        int comprobador = 0;
+        
+        for(int i = 0; i<terminales.size() ; i++){
+            if(String.valueOf(terminales.get(i)).equals(terminal3)){
+                comprobador++;
+            }
+        }
+        return comprobador == 1;
     }
 
     @Override

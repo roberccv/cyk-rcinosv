@@ -6,7 +6,8 @@ package es.ceu.gisi.modcomp.cyk_algorithm.algorithm.exceptions;
  */
 public class CYKAlgorithmException extends Exception {
 
-    public CYKAlgorithmException() {
+    public CYKAlgorithmException(String excepción) {
+        System.out.println(excepción);
     }
 
 }
