@@ -130,8 +130,7 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
             }
         }else{
             throw new UnsupportedOperationException("Not supported yet.");    
-        }
-  
+        }  
     }
 
     @Override
@@ -148,7 +147,9 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
      * gramática es vacía o si el autómata carece de axioma.
      */
     public boolean isDerived(String word) throws CYKAlgorithmException {
+        
         throw new UnsupportedOperationException("Not supported yet.");
+    
     }
 
     @Override
