@@ -274,8 +274,8 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
         }
         sb.append(nonterminal);
         sb.append("::=");
-        sb.append(matriz.get(a).get(0));
-        for (int i = 1; i < matriz.get(a).size(); i++) {
+        sb.append(matriz.get(a).get(1));
+        for (int i = 2; i < matriz.get(a).size(); i++) {
             sb.append("|");
             sb.append(matriz.get(a).get(i));
         }

@@ -249,13 +249,11 @@ public class BasicTest {
 
         cyk.addProduction('C', "AB");
         cyk.addProduction('C', "a");
-        
-        cyk.getProductions('S'); //añadido por mi
-        
+                
         assertEquals("S::=AB|BC", cyk.getProductions('S'));
-        //assertEquals("A::=BA|a", cyk.getProductions('A'));
-        //assertEquals("B::=CC|b", cyk.getProductions('B'));
-        //assertEquals("C::=AB|a", cyk.getProductions('C'));
+        assertEquals("A::=BA|a", cyk.getProductions('A'));
+        assertEquals("B::=CC|b", cyk.getProductions('B'));
+        assertEquals("C::=AB|a", cyk.getProductions('C'));
 
     }
 
