@@ -298,8 +298,9 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
     public String getGrammar() {
         String gramatica = "";
         for(int i = 0; i < matriz.size() ; i++){
-            gramatica = gramatica.concat(getProductions(matriz.get(i).get(0).charAt(0)));
+            gramatica = gramatica.concat(getProductions(matriz.get(i).get(0).charAt(0)).concat("\n"));
         }
+        System.out.println(gramatica);
         return gramatica;
         //throw new UnsupportedOperationException("Not supported yet.");
     }

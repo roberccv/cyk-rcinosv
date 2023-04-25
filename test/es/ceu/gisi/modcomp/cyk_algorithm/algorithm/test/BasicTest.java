@@ -299,6 +299,34 @@ public class BasicTest {
         cyk.addTerminal('a');
         cyk.addTerminal('b');
     }
+    @Test
+    public void comprobarImprimirGram() throws CYKAlgorithmException {
+        cyk = new CYKAlgorithm();
+        
+        cyk.addNonTerminal('S');
+        cyk.addNonTerminal('A');
+        cyk.addNonTerminal('B');
+        cyk.addNonTerminal('C');
+
+        cyk.addTerminal('a');
+        cyk.addTerminal('b');
+
+        cyk.setStartSymbol('S');
+
+        cyk.addProduction('S', "AB");
+        cyk.addProduction('S', "BC");
+
+        cyk.addProduction('A', "BA");
+        cyk.addProduction('A', "a");
+
+        cyk.addProduction('B', "CC");
+        cyk.addProduction('B', "b");
+
+        cyk.addProduction('C', "AB");
+        cyk.addProduction('C', "a");
+        
+        cyk.getGrammar();
+    }
 /*
     @Test
     public void comprobarDerivacionNoValido1() throws CYKAlgorithmException {
