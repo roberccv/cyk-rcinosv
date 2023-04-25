@@ -127,7 +127,7 @@ public class BasicTest {
         cyk.addNonTerminal('S');
         cyk.addNonTerminal('A');
         cyk.addProduction('S', "AS");
-        cyk.addProduction('S', "a");
+        //cyk.addProduction('S', "a");
     }
 
     @Test
@@ -224,8 +224,8 @@ public class BasicTest {
         cyk.addProduction('A', "SA");
         cyk.addProduction('A', "SA");
     }
-/*
-    @Test
+
+/*    @Test
     public void comprobarRecuperarProducciones() throws CYKAlgorithmException {
         cyk = new CYKAlgorithm();
         cyk.addNonTerminal('S');

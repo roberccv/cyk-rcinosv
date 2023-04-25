@@ -153,10 +153,19 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
         int comprobador = 0;
         
         for(int i = 0; i<noTerminales.size() ; i++){
-            if((String.valueOf(noTerminales.get(i)).equals(noTerminal3.charAt(0)))||(String.valueOf(noTerminales.get(i)).equals(noTerminal3.charAt(1)))){
+            if(noTerminales.get(i) == noTerminal3.charAt(0)){
+                
                 comprobador++;
-            }   
-        }        
+            } else if(noTerminales.get(i) == noTerminal3.charAt(1)){
+                
+                comprobador++;
+            }
+            System.out.println(noTerminales.get(i));
+            System.out.println(noTerminal3.charAt(1));
+            System.out.println(noTerminal3.charAt(0));
+            System.out.println(comprobador);
+        }
+        
         return comprobador == 2;
     }
     public boolean isNonTAdded(char terminal3){
