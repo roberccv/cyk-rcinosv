@@ -243,7 +243,12 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
      * dejando el algoritmo listo para volver a insertar una gramática nueva.
      */
     public void removeGrammar() {
-        throw new UnsupportedOperationException("Not supported yet.");
+            
+        //axioma = '';
+        matriz.clear();
+        noTerminales.clear();
+        terminales.clear();
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

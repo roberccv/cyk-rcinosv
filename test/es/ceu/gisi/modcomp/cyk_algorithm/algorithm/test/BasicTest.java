@@ -250,7 +250,7 @@ public class BasicTest {
         cyk.addProduction('C', "AB");
         cyk.addProduction('C', "a");
         
-        cyk.getProductions('S');
+        cyk.getProductions('S'); //añadido por mi
         
         assertEquals("S::=AB|BC", cyk.getProductions('S'));
         //assertEquals("A::=BA|a", cyk.getProductions('A'));
@@ -258,7 +258,7 @@ public class BasicTest {
         //assertEquals("C::=AB|a", cyk.getProductions('C'));
 
     }
-/*
+
     @Test
     public void comprobarEliminarGramaticaValido() throws CYKAlgorithmException {
         cyk = new CYKAlgorithm();
@@ -299,7 +299,7 @@ public class BasicTest {
         cyk.addTerminal('a');
         cyk.addTerminal('b');
     }
-
+/*
     @Test
     public void comprobarDerivacionNoValido1() throws CYKAlgorithmException {
         thrown.expect(CYKAlgorithmException.class);
