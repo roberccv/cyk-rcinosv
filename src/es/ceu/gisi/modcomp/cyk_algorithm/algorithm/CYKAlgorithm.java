@@ -127,6 +127,7 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
                 matriz.get(posicionNuevo).add(String.valueOf(nonterminal));
                 matriz.get(posicionNuevo).add(production);
                 noTerminalesAnnadidos.add(nonterminal);
+                System.out.println("La prod " + production + " ha sido añadida al terminal " + String.valueOf(nonterminal) );
             }else{
                 for(int i = 0; i < matriz.size() ; i++){
                     if((String.valueOf(nonterminal)).equals(matriz.get(i).get(0))){
@@ -135,17 +136,19 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
                             if(matriz.get(i).get(j).equals(production)){
                                 b++;
                             }
-                            if(b ==0){
-                                matriz.get(i).add(production);
-                            }else{
-                                throw new CYKAlgorithmException("La producción ya había sido añadida");
-                            }
-                        }                                                
+                        }
+                        if(b ==0){
+                            matriz.get(i).add(production);
+                            System.out.println("La prod " + production + " ha sido añadida al terminal " + String.valueOf(nonterminal) );
+                        }else{
+                            throw new CYKAlgorithmException("La producción ya había sido añadida");
+                        }
+                                                                        
                     }
                 }
             }
         }else{
-            throw new CYKAlgorithmException("La producción no cumple los requisitos");    
+            throw new CYKAlgorithmException("La producción " + production +" con cabeza "+ String.valueOf(nonterminal)+" no cumple los requisitos");    
         }  
     }
     
@@ -153,17 +156,22 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
         int comprobador = 0;
         
         for(int i = 0; i<noTerminales.size() ; i++){
-            if(noTerminales.get(i) == noTerminal3.charAt(0)){
+            if((noTerminales.get(i) == noTerminal3.charAt(1)) && (noTerminales.get(i) == noTerminal3.charAt(0))){
                 
-                comprobador++;
+                comprobador = 2;
             } else if(noTerminales.get(i) == noTerminal3.charAt(1)){
                 
                 comprobador++;
+            }else if(noTerminales.get(i) == noTerminal3.charAt(0)){
+                comprobador++;
             }
+            
+            /*
             System.out.println(noTerminales.get(i));
             System.out.println(noTerminal3.charAt(1));
             System.out.println(noTerminal3.charAt(0));
             System.out.println(comprobador);
+            */
         }
         
         return comprobador == 2;
@@ -251,9 +259,30 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
      * salida podría ser: "S::=AB|BC".
      */
     public String getProductions(char nonterminal) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        StringBuilder sb = new StringBuilder();
+        
+        int a = 0;
+        for (int i = 0; i < matriz.size(); i++) {
+            if(matriz.get(i).get(0).equals(String.valueOf(nonterminal))){
+                a = i;
+            }
+        }
+        sb.append(nonterminal);
+        sb.append("::=");
+        sb.append(matriz.get(a).get(0));
+        for (int i = 1; i < matriz.get(a).size(); i++) {
+            sb.append("|");
+            sb.append(matriz.get(a).get(i));
+        }
+        String resultado = sb.toString();
+        System.out.println(resultado);
+        //System.out.println(String.valueOf(nonterminal) + "::=" + matriz.get(a).get(0) + resto);
+        
+        return resultado;        
+        //String.valueOf(nonterminal).concat("::=").concat(matriz.get(a).get(0).concat(resto));
+        //throw new CYKAlgorithmException("Not supported yet.");
     }
-
+    
     @Override
     /**
      * Devuelve un String con la gramática completa.
@@ -262,7 +291,12 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
      * elementos no terminales.
      */
     public String getGrammar() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String gramatica = "";
+        for(int i = 0; i < matriz.size() ; i++){
+            gramatica = gramatica.concat(getProductions(matriz.get(i).get(0).charAt(0)));
+        }
+        return gramatica;
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
