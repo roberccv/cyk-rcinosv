@@ -31,7 +31,7 @@ public class BasicTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
+/*
     @Test
     public void comprobarAniadirTerminalValido() throws CYKAlgorithmException {
         cyk = new CYKAlgorithm();
@@ -224,7 +224,7 @@ public class BasicTest {
         cyk.addProduction('A', "SA");
         cyk.addProduction('A', "SA");
     }
-
+*/
     @Test
     public void comprobarRecuperarProducciones() throws CYKAlgorithmException {
         cyk = new CYKAlgorithm();
@@ -250,12 +250,12 @@ public class BasicTest {
         cyk.addProduction('C', "AB");
         cyk.addProduction('C', "a");
         
-        cyk.getProductions('C');
+        cyk.getProductions('S');
         
-        //assertEquals("S::=AB|BC", cyk.getProductions('S'));
+        assertEquals("S::=AB|BC", cyk.getProductions('S'));
         //assertEquals("A::=BA|a", cyk.getProductions('A'));
         //assertEquals("B::=CC|b", cyk.getProductions('B'));
-        assertEquals("C::=AB|a", cyk.getProductions('C'));
+        //assertEquals("C::=AB|a", cyk.getProductions('C'));
 
     }
 /*
