@@ -237,10 +237,12 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         }
        
         //cada vez busca una posición menos
-        int x = word.length();
-        for (int i = 2; i < word.length(); i++) {
+        int x = word.length()-1;
+        for (int i = 2; i <= word.length(); i++) {
             for (int j = 0; j < x; j++) {
-                comprobar.get(j).add(obtenerCelda(j, i));
+                if(comprobar.get(j).get(i-1) != null && comprobar.get(j+1).get(i-1) != null ){
+                    comprobar.get(j).add(obtenerCelda(j, i));
+                }
             }
             x--;
         }
@@ -248,7 +250,7 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         
         
         //throw new UnsupportedOperationException("Not supported yet.");
-        if (comprobar.get(word.length()).get(word.length()).contains(""+axioma) == true) {
+        if (comprobar.get(0).get(word.length()).contains(""+axioma) == true) {
           return true;
         }else{
             throw new CYKAlgorithmException("La palabra no pertenece al lenguaje definido por la gramática");
@@ -257,32 +259,32 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
      
     }
     public  String obtenerCelda(int i, int j){
-        
-        ArrayList<Character> product1 = new ArrayList<>();
-        ArrayList<Character> product2 = new ArrayList<>();
-        
-        ArrayList<String> product3 = new ArrayList<>();
-        String arriba = comprobar.get(i).get(j-1);
-        String diagonal = comprobar.get(i+1).get(j-1);
-        for(int contador = 0 ; contador < arriba.length() ; contador++){
-            product1.add(arriba.charAt(contador));
-        }
-        for(int contador2 = 0 ; contador2 < diagonal.length() ; contador2++){
-            product2.add(diagonal.charAt(contador2));
-        }
-        
-        for (Character producto : product1) {
-            for(Character producto2 : product2){
-                product3.add(""+producto + producto2);
-            }
-        }
-        
         StringBuilder sb = new StringBuilder();
         sb.append("");
-        for(String elemento : product3){
-            sb.append(obtenerProductores(elemento));
-        }
+        for (int k = 0 ; k < (i-1) ; k++ ){
+            ArrayList<Character> product1 = new ArrayList<>();
+            ArrayList<Character> product2 = new ArrayList<>();
         
+            ArrayList<String> product3 = new ArrayList<>();
+            String arriba = comprobar.get(i).get(j-1);
+            String diagonal = comprobar.get(i+1).get(j-1);
+            for(int contador = 0 ; contador < arriba.length() ; contador++){
+                product1.add(arriba.charAt(contador));
+            }
+            for(int contador2 = 0 ; contador2 < diagonal.length() ; contador2++){
+                product2.add(diagonal.charAt(contador2));
+            }
+        
+            for (Character producto : product1) {
+                for(Character producto2 : product2){
+                    product3.add(""+producto + producto2);
+                }
+            }
+                        
+            for(String elemento : product3){
+                sb.append(obtenerProductores(elemento));
+            }
+        }
         return sb.toString();
     }
     
