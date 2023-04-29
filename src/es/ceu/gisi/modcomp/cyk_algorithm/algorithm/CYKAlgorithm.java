@@ -214,8 +214,10 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
      */
     public boolean isDerived(String word) throws CYKAlgorithmException {
        
+        
         //añade la palabra a la primera posición del arrayList
         for (int i = 0; i < word.length(); i++) {
+            comprobar.add(new ArrayList<String>());
             comprobar.get(i).add(""+word.charAt(i));
             
         }   
@@ -236,15 +238,22 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
        
         //cada vez busca una posición menos
         int x = word.length();
-        for (int i = 0; i < word.length(); i++) {
-            for (int j = 1; j < x; j++) {
-                
+        for (int i = 2; i < word.length(); i++) {
+            for (int j = 0; j < x; j++) {
+                comprobar.get(j).add(obtenerCelda(j, i));
             }
             x--;
         }
-         
+        
+        
+        
         //throw new UnsupportedOperationException("Not supported yet.");
-        return comprobar.get(word.length()).get(word.length()).contains("S");
+        if (comprobar.get(word.length()).get(word.length()).contains(""+axioma) == true) {
+          return true;
+        }else{
+            throw new CYKAlgorithmException("La palabra no pertenece al lenguaje definido por la gramática");
+        }
+         
      
     }
     public  String obtenerCelda(int i, int j){
@@ -269,6 +278,7 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         }
         
         StringBuilder sb = new StringBuilder();
+        sb.append("");
         for(String elemento : product3){
             sb.append(obtenerProductores(elemento));
         }
@@ -308,8 +318,14 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
      */
     public String algorithmStateToString(String word) throws CYKAlgorithmException {
         
-        throw new UnsupportedOperationException("Not supported yet.");
-        
+        for (int i = 1; i < comprobar.size(); i++) {
+            for (int j = 0; j < comprobar.get(i).size(); j++) {
+                System.out.printf("%-10s", comprobar.get(i).get(j));
+            }
+            
+            System.out.println();
+        }
+     return "";   
     }
 
     @Override

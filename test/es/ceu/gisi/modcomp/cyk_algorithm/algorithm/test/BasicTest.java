@@ -326,12 +326,13 @@ public class BasicTest {
         cyk.getGrammar();
     }
     @Test
-    public void comprobarNulo() throws CYKAlgorithmException{
+    public void comprobarImprimir() throws CYKAlgorithmException{
         cyk = new CYKAlgorithm();
         
         
+        
     }
-/*
+
     @Test
     public void comprobarDerivacionNoValido1() throws CYKAlgorithmException {
         thrown.expect(CYKAlgorithmException.class);
@@ -453,5 +454,4 @@ public class BasicTest {
 
         assertFalse(cyk.isDerived("bbb"));
     }
-*/
 }
