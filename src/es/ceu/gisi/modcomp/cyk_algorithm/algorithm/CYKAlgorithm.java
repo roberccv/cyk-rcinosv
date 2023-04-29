@@ -20,6 +20,7 @@ ArrayList<Character> terminales = new ArrayList<>();
 //probar sin lo de dentro de los corchetes de el lado derecho del igual
 ArrayList<ArrayList<String>> matriz = new ArrayList<ArrayList<String>>();
 ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
+ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
 
     @Override
     /**
@@ -111,6 +112,7 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
         boolean condicion1 = ((production.length() == 1) && (Character.isUpperCase(production.charAt(0)) == false) && isTAdded(production));
         boolean condicion2 = ((production.length()== 2) && (Character.isUpperCase(production.charAt(0))) && (Character.isUpperCase(production.charAt(1))) && isProdAdded(production));
         boolean condicion3 = (isNonTAdded(nonterminal));
+        //String n = ""+nonterminal;
         
         
         if((condicion1 || condicion2) && (condicion3)){
@@ -211,9 +213,81 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
      * gramática es vacía o si el autómata carece de axioma.
      */
     public boolean isDerived(String word) throws CYKAlgorithmException {
+       
+        //añade la palabra a la primera posición del arrayList
+        for (int i = 0; i < word.length(); i++) {
+            comprobar.get(i).add(""+word.charAt(i));
+            
+        }   
         
-        throw new UnsupportedOperationException("Not supported yet.");
+        //añadir posición 1
+        for (int m = 0; m < word.length(); m++) {
+            /*
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < matriz.size(); i++) {
+                for (int j = 1; j < matriz.get(i).size(); j++) {
+                    if(comprobar.get(m).get(0).equals(matriz.get(i).get(j))){
+                        sb.append(matriz.get(i).get(0));
+                    }
+                }            
+            }*/
+            comprobar.get(m).add(obtenerProductores(comprobar.get(m).get(0)));
+        }
+       
+        //cada vez busca una posición menos
+        int x = word.length();
+        for (int i = 0; i < word.length(); i++) {
+            for (int j = 1; j < x; j++) {
+                
+            }
+            x--;
+        }
+         
+        //throw new UnsupportedOperationException("Not supported yet.");
+        return comprobar.get(word.length()).get(word.length()).contains("S");
+     
+    }
+    public  String obtenerCelda(int i, int j){
+        
+        ArrayList<Character> product1 = new ArrayList<>();
+        ArrayList<Character> product2 = new ArrayList<>();
+        
+        ArrayList<String> product3 = new ArrayList<>();
+        String arriba = comprobar.get(i).get(j-1);
+        String diagonal = comprobar.get(i+1).get(j-1);
+        for(int contador = 0 ; contador < arriba.length() ; contador++){
+            product1.add(arriba.charAt(contador));
+        }
+        for(int contador2 = 0 ; contador2 < diagonal.length() ; contador2++){
+            product2.add(diagonal.charAt(contador2));
+        }
+        
+        for (Character producto : product1) {
+            for(Character producto2 : product2){
+                product3.add(""+producto + producto2);
+            }
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        for(String elemento : product3){
+            sb.append(obtenerProductores(elemento));
+        }
+        
+        return sb.toString();
+    }
     
+    public String obtenerProductores(String combi){
+        StringBuilder sb = new StringBuilder();
+        
+            for (int i = 0; i < matriz.size(); i++) {
+                for (int j = 1; j < matriz.get(i).size(); j++) {
+                    if(combi.equals(matriz.get(i).get(j))){
+                        sb.append(matriz.get(i).get(0));
+                    }
+                }            
+            }
+
+        return sb.toString();
     }
 
     @Override
@@ -233,7 +307,9 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
      * gramática es vacía o si el autómata carece de axioma.
      */
     public String algorithmStateToString(String word) throws CYKAlgorithmException {
+        
         throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     @Override
@@ -244,10 +320,10 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
      */
     public void removeGrammar() {
             
-        //axioma = '';
+        axioma = '\n';
         matriz.clear();
         noTerminales.clear();
-        terminales.clear();
+        terminales.clear();        
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -266,12 +342,23 @@ ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
     public String getProductions(char nonterminal) {
         StringBuilder sb = new StringBuilder();
         
-        int a = 0;
+        int a = -1;
+        /*
         for (int i = 0; i < matriz.size(); i++) {
             if(matriz.get(i).get(0).equals(String.valueOf(nonterminal))){
                 a = i;
             }
+        }*/
+        for(ArrayList<String> prod : matriz){
+            if(prod.get(0).equals(String.valueOf(nonterminal))){
+                a = matriz.indexOf(prod);
+            }
         }
+        
+        if(a==-1){
+            return "";
+        }
+        
         sb.append(nonterminal);
         sb.append("::=");
         sb.append(matriz.get(a).get(1));
