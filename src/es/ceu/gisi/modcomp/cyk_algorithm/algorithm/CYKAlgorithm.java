@@ -3,6 +3,8 @@ package es.ceu.gisi.modcomp.cyk_algorithm.algorithm;
 import es.ceu.gisi.modcomp.cyk_algorithm.algorithm.exceptions.CYKAlgorithmException;
 import es.ceu.gisi.modcomp.cyk_algorithm.algorithm.interfaces.CYKAlgorithmInterface;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Esta clase contiene la implementación de la interfaz CYKAlgorithmInterface
@@ -213,15 +215,16 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
      * gramática es vacía o si el autómata carece de axioma.
      */
     public boolean isDerived(String word) throws CYKAlgorithmException {
-       
+        if (rejectDerived(word)) {
+            throw new CYKAlgorithmException("Se descarta la palabra, no cumple los requisitos");
+        }
         
         //añade la palabra a la primera posición del arrayList
         for (int i = 0; i < word.length(); i++) {
             comprobar.add(new ArrayList<String>());
             comprobar.get(i).add(""+word.charAt(i));
             
-        }   
-        
+        }           
         //añadir posición 1
         for (int m = 0; m < word.length(); m++) {
             /*
@@ -234,8 +237,7 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
                 }            
             }*/
             comprobar.get(m).add(obtenerProductores(comprobar.get(m).get(0)));
-        }
-       
+        }       
         //cada vez busca una posición menos
         int x = word.length()-1;
         for (int i = 2; i <= word.length(); i++) {
@@ -245,29 +247,39 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
                 }
             }
             x--;
-        }
-        
-        
-        
-        //throw new UnsupportedOperationException("Not supported yet.");
-        if (comprobar.get(0).get(word.length()).contains(""+axioma) == true) {
-          return true;
-        }else{
-            throw new CYKAlgorithmException("La palabra no pertenece al lenguaje definido por la gramática");
-        }
-         
-     
+        }               
+        algorithmStateToString(word);
+        return comprobar.get(0).get(word.length()).contains(""+axioma) == true;//throw new CYKAlgorithmException("La palabra no pertenece al lenguaje definido por la gramática");
+    
     }
+    public boolean rejectDerived(String word ){
+        int a = 0;
+        for(int i = 0 ; i < word.length() ; i++){
+            if(Character.isUpperCase(word.charAt(i))){
+                a ++;
+            }else if(!terminales.contains(word.charAt(i))){
+                a++;
+            }
+        }
+        
+        
+        return (axioma == ('\n')) || (matriz.isEmpty()) || (a > 0);
+    }
+    
     public  String obtenerCelda(int i, int j){
+        int r = i;
+        int s = j;
+        int o = 1;
         StringBuilder sb = new StringBuilder();
         sb.append("");
-        for (int k = 0 ; k < (i-1) ; k++ ){
+        Set<Character> product3 = new HashSet<>();
+        
+        for (int k = 0 ; k < (j-1) ; k++ ){
             ArrayList<Character> product1 = new ArrayList<>();
             ArrayList<Character> product2 = new ArrayList<>();
-        
-            ArrayList<String> product3 = new ArrayList<>();
-            String arriba = comprobar.get(i).get(j-1);
-            String diagonal = comprobar.get(i+1).get(j-1);
+                   
+            String arriba = comprobar.get(i).get(o);
+            String diagonal = comprobar.get(r+1).get(s-1);
             for(int contador = 0 ; contador < arriba.length() ; contador++){
                 product1.add(arriba.charAt(contador));
             }
@@ -277,13 +289,19 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         
             for (Character producto : product1) {
                 for(Character producto2 : product2){
-                    product3.add(""+producto + producto2);
+                    String productores = obtenerProductores(""+producto + producto2);         
+                    for(int z = 0 ; z < productores.length() ; z++){
+                        product3.add(productores.charAt(z));
+                    }                    
                 }
             }
-                        
-            for(String elemento : product3){
-                sb.append(obtenerProductores(elemento));
-            }
+                                                
+            r++;
+            s--;
+            o++;
+        }
+        for(Character elemento : product3){
+                sb.append(elemento);
         }
         return sb.toString();
     }
@@ -320,7 +338,7 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
      */
     public String algorithmStateToString(String word) throws CYKAlgorithmException {
         
-        for (int i = 1; i < comprobar.size(); i++) {
+        for (int i = 0; i < comprobar.size(); i++) {
             for (int j = 0; j < comprobar.get(i).size(); j++) {
                 System.out.printf("%-10s", comprobar.get(i).get(j));
             }
