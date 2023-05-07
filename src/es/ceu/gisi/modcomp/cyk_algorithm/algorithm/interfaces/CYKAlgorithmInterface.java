@@ -6,7 +6,7 @@ import es.ceu.gisi.modcomp.cyk_algorithm.algorithm.exceptions.CYKAlgorithmExcept
  * Interfaz que proporciona todos los métodos que deben implementar los alumnos
  * para el proyecto de modelos de computación.
  *
- * @author Sergio Saugar <sergio.saugargarcia@ceu.es>
+ * @author Sergio Saugar García <sergio.saugargarcia@ceu.es>
  */
 public interface CYKAlgorithmInterface {
 
@@ -92,7 +92,7 @@ public interface CYKAlgorithmInterface {
      * Devuelve un String que representa todas las producciones que han sido
      * agregadas a un elemento no terminal.
      *
-     * @param nonterminal
+     * @param nonterminal.
      * @return Devuelve un String donde se indica, el elemento no terminal, el
      * símbolo de producción "::=" y las producciones agregadas separadas, única
      * y exclusivamente por una barra '|' (no incluya ningún espacio). Por

@@ -11,7 +11,7 @@ import java.util.Set;
  * que establece los métodos necesarios para el correcto funcionamiento del
  * proyecto de programación de la asignatura Modelos de Computación.
  *
- * @author Roberto Cinos Vega <roberto.cinosvega@usp.ceu>
+ * @author Sergio Saugar García <sergio.saugargarcia@ceu.es>
  */
 public class CYKAlgorithm implements CYKAlgorithmInterface {
 char axioma;
@@ -260,14 +260,15 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
     
     }
     /**
-     * Método que, obtiene la celda cuya posición 'x' e 'y' de la matriz se le pasa 
-     * como parámetro, siguiendo el algoritmo propuesto. Este comprara las filas
-     * superiores y las diagonales mezclando todos los elementos que contiene y 
-     * obtiene sus productores llamando al método ObtenerProductores.
+     * Método que, comprueba que la palabra que ha sido pasada como parámetro
+     * cumple con los requisitos para poderhaber sido generada por una gramática.
+     * Comprueba si esta no contiene ningun caracter en mayúscula, que todos 
+     * los elementos de la palabra hayan sido añadidos como terminales 
+     * previamente, que la gramática no este vacía y que el autómata tenga un 
+     * axioma definido.
      *
-     * @param word posición del ArrayList de Strings.
-     * @return 
-     * 
+     * @param word , stringa a comprobar.
+     * @return true si la palabra pasada como parámetro debería ser rechazada.
      */
     public boolean rejectDerived(String word){
         int a = 0;
