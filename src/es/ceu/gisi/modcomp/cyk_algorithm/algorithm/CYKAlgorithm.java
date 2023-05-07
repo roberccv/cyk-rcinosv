@@ -11,7 +11,7 @@ import java.util.Set;
  * que establece los métodos necesarios para el correcto funcionamiento del
  * proyecto de programación de la asignatura Modelos de Computación.
  *
- * @author Sergio Saugar García <sergio.saugargarcia@ceu.es>
+ * @author Roberto Cinos Vega <roberto.cinosvega@usp.ceu>
  */
 public class CYKAlgorithm implements CYKAlgorithmInterface {
 char axioma;
@@ -19,7 +19,6 @@ char axioma;
 ArrayList<Character> noTerminales = new ArrayList<>();
 ArrayList<Character> terminales = new ArrayList<>();
 
-//probar sin lo de dentro de los corchetes de el lado derecho del igual
 ArrayList<ArrayList<String>> matriz = new ArrayList<ArrayList<String>>();
 ArrayList<Character> noTerminalesAnnadidos = new ArrayList<>();
 ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
@@ -32,25 +31,19 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
      * @throws CYKAlgorithmException Si el elemento no es una letra mayúscula.
      */
     public void addNonTerminal(char nonterminal) throws CYKAlgorithmException {
-        //preguntar si  puedo comprobar que si ya esta en el arrayList no lo añada
-        //y lance otra excepción -> ese elemento ya ha sido añadido previamente
         boolean condicion = Character.isDigit(nonterminal);
         if(Character.isUpperCase(nonterminal) && (isNonTAdded(nonterminal)== false) && (condicion == false)){
             noTerminales.add(nonterminal);
+        }else if(isNonTAdded(nonterminal)== true){
+            throw new CYKAlgorithmException("El elemento no terminal ya había sido añadido");
         }else{
-            throw new CYKAlgorithmException("Not supported yet.");
+            throw new CYKAlgorithmException("El elemento no cumple con los requisitos para ser un no terminal."
+            + " Compruebe que sea una letra mayúscula");
         }
+            
     }
-    /*public boolean noNumero(char c){
-        int comprobador = 0;
-        for (int i = 0; i < 10; i++) {
-            if (c == i) {
-                comprobador++;
-            }
-        }
-        return comprobador == 0;
-    }
-    */
+    
+
     
     @Override
     /**
@@ -64,8 +57,11 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         boolean condicion = Character.isDigit(terminal);
         if((Character.isUpperCase(terminal)== false) && (condicion == false) && (isTAdded(String.valueOf(terminal)) == false) ){
             terminales.add(terminal);
+        }else if(isTAdded(String.valueOf(terminal))== true){
+            throw new CYKAlgorithmException("El elemento terminal ya había sido añadido");
         }else{
-            throw new CYKAlgorithmException("Not supported yet.");
+            throw new CYKAlgorithmException("El elemento no cumple con los requisitos para ser un terminal."
+            + " Compruebe que sea una letra minúscula");
         }
     }
 
@@ -88,7 +84,7 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
             }
         }
         if(dentro == false){
-            throw new CYKAlgorithmException("Not supported yet.");
+            throw new CYKAlgorithmException("El elemento no forma parte de los elementos terminales añadidos, debe introducirlo antes.");
         }else{
             axioma = nonterminal;
        }
@@ -106,16 +102,11 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
      * previamente.
      */
     public void addProduction(char nonterminal, String production) throws CYKAlgorithmException {
-        //IMPORTANTE tengo que separar el String en chars para comprobar que este en No terminales
-        //para así luego poder meterlo en la matriz
-        //tm comprobar que si produccion es mayor que 2, no es valido
         int a = 0;
         int b = 0;
         boolean condicion1 = ((production.length() == 1) && (Character.isUpperCase(production.charAt(0)) == false) && isTAdded(production));
         boolean condicion2 = ((production.length()== 2) && (Character.isUpperCase(production.charAt(0))) && (Character.isUpperCase(production.charAt(1))) && isProdAdded(production));
         boolean condicion3 = (isNonTAdded(nonterminal));
-        //String n = ""+nonterminal;
-        
         
         if((condicion1 || condicion2) && (condicion3)){
             
@@ -156,6 +147,18 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         }  
     }
     
+    /**
+     * Método que comprueba si los elementos de la producción de un No terminal de la gramática 
+     * están añadidos a la gramática. Este método esta destinado a comprobar las 
+     * producciones con la forma "BA" o "CC", para ello usa un contador donde va 
+     * comparando cada char del String noTerminal3 con los elementos en el 
+     * ArrayList noTerminales.
+     *
+     * @param noTerminal3 String compuesto por dos elementos no terminales; 
+     * @return devuelve true si los elementos de la producción habían sido añadidos 
+     * a la gramática previamente, y false en  el caso contrario.
+     * 
+     */
     public boolean isProdAdded(String noTerminal3){
         int comprobador = 0;
         
@@ -169,27 +172,39 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
             }else if(noTerminales.get(i) == noTerminal3.charAt(0)){
                 comprobador++;
             }
-            
-            /*
-            System.out.println(noTerminales.get(i));
-            System.out.println(noTerminal3.charAt(1));
-            System.out.println(noTerminal3.charAt(0));
-            System.out.println(comprobador);
-            */
         }
         
         return comprobador == 2;
     }
-    public boolean isNonTAdded(char terminal3){
+    
+    /**
+     *Método que, comprueba si el elemento no terminal que le es pasado como 
+     * parámetro había sido añadido previamente a la gramática. Comprueba el 
+     * ArrayList donde se guardan todos los no terminales ya añadidos.
+     *
+     * @param nonTerminal3 Char correspondiente a un no terminal a comprobar.
+     * @return true si el no terminal había sido añadido, false en el caso 
+     * contrario.
+     */
+    public boolean isNonTAdded(char nonTerminal3){
         int comprobador = 0;
         
         for(int i = 0; i<noTerminales.size() ; i++){
-            if(noTerminales.get(i) == terminal3){
+            if(noTerminales.get(i) == nonTerminal3){
                 comprobador++;
             }
         }
         return comprobador == 1;
     }
+    /**
+     *Método que, comprueba si el elemento terminal que le es pasado como 
+     * parámetro había sido añadido previamente a la gramática. Comprueba el 
+     * ArrayList donde se guardan todos los terminales ya añadidos.
+     *
+     * @param terminal3 Char correspondiente a un terminal a comprobar.
+     * @return true si el terminal había sido añadido, false en el caso 
+     * contrario.
+     */
     public boolean isTAdded(String terminal3){
         int comprobador = 0;
         
@@ -227,15 +242,6 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         }           
         //añadir posición 1
         for (int m = 0; m < word.length(); m++) {
-            /*
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < matriz.size(); i++) {
-                for (int j = 1; j < matriz.get(i).size(); j++) {
-                    if(comprobar.get(m).get(0).equals(matriz.get(i).get(j))){
-                        sb.append(matriz.get(i).get(0));
-                    }
-                }            
-            }*/
             comprobar.get(m).add(obtenerProductores(comprobar.get(m).get(0)));
         }       
         //cada vez busca una posición menos
@@ -248,11 +254,22 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
             }
             x--;
         }               
-        algorithmStateToString(word);
+        System.out.println(algorithmStateToString(word));
+        
         return comprobar.get(0).get(word.length()).contains(""+axioma) == true;//throw new CYKAlgorithmException("La palabra no pertenece al lenguaje definido por la gramática");
     
     }
-    public boolean rejectDerived(String word ){
+    /**
+     * Método que, obtiene la celda cuya posición 'x' e 'y' de la matriz se le pasa 
+     * como parámetro, siguiendo el algoritmo propuesto. Este comprara las filas
+     * superiores y las diagonales mezclando todos los elementos que contiene y 
+     * obtiene sus productores llamando al método ObtenerProductores.
+     *
+     * @param word posición del ArrayList de Strings.
+     * @return 
+     * 
+     */
+    public boolean rejectDerived(String word){
         int a = 0;
         for(int i = 0 ; i < word.length() ; i++){
             if(Character.isUpperCase(word.charAt(i))){
@@ -265,8 +282,19 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         
         return (axioma == ('\n')) || (matriz.isEmpty()) || (a > 0);
     }
-    
-    public  String obtenerCelda(int i, int j){
+
+    /**
+     * Método que, obtiene la celda cuya posición 'x' e 'y' de la matriz se le pasa 
+     * como parámetro, siguiendo el algoritmo propuesto, Este comprara las filas
+     * superiores y las diagonales mezclando todos los elementos que contiene y 
+     * obtiene sus productores llamando al método ObtenerProductores.
+     *
+     * @param i posición del ArrayList de Strings.
+     * @param j posición del String dentro de los ArrayLists
+     * @return Un String con los.
+     * 
+     */
+    public String obtenerCelda(int i, int j){
         int r = i;
         int s = j;
         int o = 1;
@@ -305,7 +333,14 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         }
         return sb.toString();
     }
-    
+    /**
+     * Método que, paraa cada combinación de no terminales, obtiene sus
+     * productures para así agregarlos a la tabla.
+     *
+     * @param combi es un string formado por dos elementos no terminales.
+     * @return Un String con los productores de la combinación pasada como 
+     * parámetro.
+     */
     public String obtenerProductores(String combi){
         StringBuilder sb = new StringBuilder();
         
@@ -337,15 +372,37 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
      * gramática es vacía o si el autómata carece de axioma.
      */
     public String algorithmStateToString(String word) throws CYKAlgorithmException {
-        
-        for (int i = 0; i < comprobar.size(); i++) {
-            for (int j = 0; j < comprobar.get(i).size(); j++) {
-                System.out.printf("%-10s", comprobar.get(i).get(j));
-            }
-            
-            System.out.println();
+       
+        if (rejectDerived(word)) {
+            throw new CYKAlgorithmException("Se descarta la palabra, no cumple los requisitos");
         }
-     return "";   
+        
+       int columnas = comprobar.get(0).size();
+       int filas = comprobar.size();
+       StringBuilder sb = new StringBuilder();
+       
+    for (ArrayList<String> comprobar1 : comprobar) {
+        sb.append("-------------");
+    }
+       sb.append("\n");
+       for (int i = 0; i <  columnas; i++) {
+                      
+            sb.append("|");
+            for (int j = 0 ; j < filas ; j++) {
+                sb.append(String.format("%-10s  |" , comprobar.get(j).get(i)));
+            }
+            sb.append("\n");
+            for(int j =0; j< filas; j++){
+                sb.append("-------------");
+            }
+            sb.append("\n");
+            
+            if (i > 0){
+                filas--;
+            }
+       }
+       return sb.toString();
+       
     }
 
     @Override
@@ -360,7 +417,6 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         matriz.clear();
         noTerminales.clear();
         terminales.clear();        
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -425,7 +481,6 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         }
         System.out.println(gramatica);
         return gramatica;
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

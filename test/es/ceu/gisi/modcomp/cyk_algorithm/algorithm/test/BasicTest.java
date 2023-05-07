@@ -645,7 +645,7 @@ public class BasicTest {
         cyk.addProduction('B', "SB");
         cyk.addProduction('B', "b");              
 
-        assertTrue(cyk.isDerived(""));
+        assertTrue(cyk.isDerived("ababbbbbab"));
     }
     
      @Test
@@ -673,6 +673,6 @@ public class BasicTest {
         cyk.addProduction('B', "SB");
         cyk.addProduction('B', "b");              
 
-        assertTrue(cyk.isDerived(""));
+        assertFalse(cyk.isDerived("abaaab"));
     }
 }
