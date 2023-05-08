@@ -2,7 +2,7 @@ package es.ceu.gisi.modcomp.cyk_algorithm.algorithm.exceptions;
 
 /**
  *
- * @author Sergio Saugar García <sergio.saugargarcia@ceu.es>
+ * @author Roberto Cinos Vega.
  */
 public class CYKAlgorithmException extends Exception {
 

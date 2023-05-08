@@ -6,7 +6,7 @@ import es.ceu.gisi.modcomp.cyk_algorithm.algorithm.exceptions.CYKAlgorithmExcept
  * Interfaz que proporciona todos los métodos que deben implementar los alumnos
  * para el proyecto de modelos de computación.
  *
- * @author Sergio Saugar García <sergio.saugargarcia@ceu.es>
+ * @author Roberto Cinos Vega .
  */
 public interface CYKAlgorithmInterface {
 

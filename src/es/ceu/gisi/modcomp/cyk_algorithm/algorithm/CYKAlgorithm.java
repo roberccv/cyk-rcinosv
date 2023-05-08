@@ -11,7 +11,7 @@ import java.util.Set;
  * que establece los métodos necesarios para el correcto funcionamiento del
  * proyecto de programación de la asignatura Modelos de Computación.
  *
- * @author Sergio Saugar García <sergio.saugargarcia@ceu.es>
+ * @author Roberto Cinos Vega
  */
 public class CYKAlgorithm implements CYKAlgorithmInterface {
 char axioma;
@@ -256,7 +256,8 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         }               
         System.out.println(algorithmStateToString(word));
         
-        return comprobar.get(0).get(word.length()).contains(""+axioma) == true;//throw new CYKAlgorithmException("La palabra no pertenece al lenguaje definido por la gramática");
+        return comprobar.get(0).get(word.length()).contains(""+axioma) == true;
+        //throw new CYKAlgorithmException("La palabra no pertenece al lenguaje definido por la gramática");
     
     }
     /**
@@ -417,7 +418,16 @@ ArrayList<ArrayList<String>> comprobar = new ArrayList<ArrayList<String>>();
         axioma = '\n';
         matriz.clear();
         noTerminales.clear();
-        terminales.clear();        
+        terminales.clear();
+        removeDeriveds();
+    }
+    /**
+     * Vacía las estructuras de datos usadas para comprobar si una palabra 
+     * pertenece a un lenguaje determinado.
+     */
+    public void removeDeriveds(){
+        noTerminalesAnnadidos.clear();
+        comprobar.clear();
     }
 
     @Override
