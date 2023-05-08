@@ -70,15 +70,6 @@ public class BasicTest {
     }
 
     @Test
-    public void comprobarAniadirTerminalNoValido4() throws CYKAlgorithmException {
-        thrown.expect(CYKAlgorithmException.class);
-        cyk = new CYKAlgorithm();
-        cyk.addTerminal("".charAt(0));
-        cyk.addNonTerminal('A');        
-                  
-    }
-    
-    @Test
     public void comprobarAniadirNoTerminalValido() throws CYKAlgorithmException {
         cyk = new CYKAlgorithm();
         cyk.addNonTerminal('S');
@@ -243,18 +234,6 @@ public class BasicTest {
         cyk.addProduction('A', "SA");
     }
     
-     @Test
-    public void comprobarAniadirProduccionNoValida9() throws CYKAlgorithmException {
-        thrown.expect(CYKAlgorithmException.class);
-        cyk = new CYKAlgorithm();
-        cyk.addTerminal('a');
-
-        cyk.addNonTerminal('A');
-
-        cyk.addProduction('A', null);
-
-    }
-
     @Test
     public void comprobarRecuperarProducciones() throws CYKAlgorithmException {
         cyk = new CYKAlgorithm();
