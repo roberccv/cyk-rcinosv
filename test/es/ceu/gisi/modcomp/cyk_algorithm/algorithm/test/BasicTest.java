@@ -20,7 +20,7 @@ import org.junit.rules.ExpectedException;
  *
  * El código del alumno, no obstante, será comprobado con tests adicionales.
  *
- * @author Roberto Cinos Vega <roberto.cinosvega@usp.ceu.es>
+ * @author Roberto Cinos Vega.
  */
 public class BasicTest {
 

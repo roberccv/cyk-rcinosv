@@ -11,7 +11,7 @@ import java.util.Set;
  * que establece los métodos necesarios para el correcto funcionamiento del
  * proyecto de programación de la asignatura Modelos de Computación.
  *
- * @author Roberto Cinos Vega <roberto.cinosvega@usp.ceu.es>
+ * @author Roberto Cinos Vega.
  */
 public class CYKAlgorithm implements CYKAlgorithmInterface {
 char axioma;
